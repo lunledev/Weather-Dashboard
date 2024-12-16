@@ -1,4 +1,14 @@
+import fs from 'node:fs/promises';
+
+
 // TODO: Define a City class with name and id properties
+class City{
+
+  name: string;
+  id: number;
+}
+
+}
 
 // TODO: Complete the HistoryService class
 class HistoryService {
