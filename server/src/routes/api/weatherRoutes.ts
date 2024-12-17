@@ -5,7 +5,7 @@ const router = Router();
  import WeatherService from '../../service/weatherService.js';
 
 // TODO: POST Request with city name to retrieve weather data
-router.post('/', (req, res) => {
+router.post('/api/weather', async (req, res) => {
   // TODO: GET weather data from city name
   const {city_name} = req.body;  
   // TODO: save city to search history
@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
 });
 
 // TODO: GET search history
-router.get('/history', async (_req, res) => {
+router.get('api/weather/history', async (_req, res) => {
 try{
 
   const savedcityname = await HistoryService.getCities();
