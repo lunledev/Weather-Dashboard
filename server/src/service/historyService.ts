@@ -56,10 +56,27 @@ class HistoryService {
       id: uuidv4()
     
     };
+    return await  this.getCities().then((cities) => {
+      if(cities.find((idRef) => idRef.name === city)) {
+        return cities;
+      }  
+
+      //create a new array that includes both cities and citywithID.
+      return [...cities, citywithID];
+
+
+
+    }).then ((citiesUpdate) => this.write(citiesUpdate))
+    .then(() => citywithID);
 
   }
   // * BONUS TODO: Define a removeCity method that removes a city from the searchHistory.json file
-  async removeCity(id: string) {}
+  async removeCity(id: string) {
+    return this.getCities().then((city) => city.filter((cities) => cities.id === id))
+    .then((selectedcity) => this.write(selectedcity));
+  
+
+  }
 }
 
 export default new HistoryService();
