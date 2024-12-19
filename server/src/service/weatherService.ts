@@ -44,7 +44,7 @@ class WeatherService {
   baseURL: string;
   apiKey: string;
   cityName: string;
-  
+
   constructor() {
     this.baseURL = process.env.API_BASE_URL || '';
     this.apiKey = process.env.API_KEY || '';
@@ -54,41 +54,54 @@ class WeatherService {
   // TODO: Create fetchLocationData method
   private async fetchLocationData(query: string) {
 
-     const locationdata = query.split(",");
-     
-    //return locationdata.filter((data) => 
-     //{
-     // lat: parseInt(data[0]);
-      //lon: parseInt(data[1]);
+    const locationdata = query.split(",");
 
-     //});
-     return locationdata;
-//api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
-    
+    //return locationdata.filter((data) => 
+    //{
+    // lat: parseInt(data[0]);
+    //lon: parseInt(data[1]);
+
+    //});
+
+    return locationdata;
+    //api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
+
 
   }
   // TODO: Create destructureLocationData method
   private destructureLocationData(locationData: Coordinates): Coordinates {
 
+
+    //const lat = locationData.longitude;
+    // const lon = locationData.latitude;
+
+    // locationData.longitude = lat;
+    //locationData.latitude = lon;
+    //try {
+      //if (locationData.latitude !== undefined && locationData.longitude !== undefined) {
+
+        const { latitude, longitude } = locationData;
+
+        return  { latitude, longitude };
+
+     // }
+    //}
+    //catch (err) {
+      //console.log(err);
+      
+    //}
+    //return locationData;
     
-   const lat = locationData.longitude;
-    const lon = locationData.latitude;
 
-    locationData.longitude = lat;
-    locationData.latitude = lon;
-
-
-    return locationData; 
-    
   }
 
   // TODO: Create buildGeocodeQuery method
   private buildGeocodeQuery(): string {
 
-    
-    const geocodeQuery = fetch(`${this.baseURL}/geo/1.0/direct?q=${this.getWeatherForCity(this.cityName)}&limit=30000&appid=${this.apiKey}`);
-    return ''+this.fetchLocationData(geocodeQuery.toString());
-    
+    const limit = 30000;
+    const geocodeQuery = fetch(`${this.baseURL}/geo/1.0/direct?q=${this.getWeatherForCity(this.cityName)}&limit=${limit}&appid=${this.apiKey}`);
+    return '' + this.fetchLocationData(geocodeQuery.toString());
+
 
 
 
@@ -117,7 +130,7 @@ class WeatherService {
       const weather = await fetch(`${this.baseURL}/data/2.5/forecast?q=${city}&appid=${this.apiKey}`);
       weather.json();
 
-      return await this.buildForecastArray(weather,weather.data);
+      return await this.buildForecastArray(weather, weather.data);
 
 
     }
