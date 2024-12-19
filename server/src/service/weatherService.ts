@@ -44,7 +44,7 @@ class WeatherService {
   baseURL: string;
   apiKey: string;
   cityName: string;
-
+  
   constructor() {
     this.baseURL = process.env.API_BASE_URL || '';
     this.apiKey = process.env.API_KEY || '';
@@ -87,7 +87,7 @@ class WeatherService {
 
     
     const geocodeQuery = fetch(`${this.baseURL}/geo/1.0/direct?q=${this.getWeatherForCity(this.cityName)}&limit=30000&appid=${this.apiKey}`);
-    return ""+this.fetchLocationData(geocodeQuery.toString());
+    return ''+this.fetchLocationData(geocodeQuery.toString());
     
 
 
