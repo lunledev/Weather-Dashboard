@@ -52,11 +52,11 @@ class WeatherService {
   }
 
   // TODO: Create fetchLocationData method
-  private async fetchLocationData(query: string) {
+  //private async fetchLocationData(query: string) {
 
 
 
-  }
+  //}
   // TODO: Create destructureLocationData method
   // private destructureLocationData(locationData: Coordinates): Coordinates {}
 
@@ -79,7 +79,23 @@ class WeatherService {
   // private buildForecastArray(currentWeather: Weather, weatherData: any[]) {}
 
   // TODO: Complete getWeatherForCity method
-  // async getWeatherForCity(city: string) {}
+  async getWeatherForCity(city: string) {
+
+    try {
+
+      const weather = await fetch(`${this.baseURL}/data/2.5/forecast?q=${city}&appid=${this.apiKey}`);
+      weather.json();
+
+      return await this.buildForecastArray(weather,weather.data);
+
+
+    }
+    catch (err) {
+      console.log(err);
+      return err;
+    }
+
+  }
 }
 
 export default new WeatherService();
