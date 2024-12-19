@@ -52,16 +52,25 @@ class WeatherService {
   }
 
   // TODO: Create fetchLocationData method
-  //private async fetchLocationData(query: string) {
+  private async fetchLocationData(query: string) {
 
 
 
-  //}
+  }
   // TODO: Create destructureLocationData method
   // private destructureLocationData(locationData: Coordinates): Coordinates {}
 
   // TODO: Create buildGeocodeQuery method
-  // private buildGeocodeQuery(): string {}
+  private buildGeocodeQuery(): string {
+
+    
+    const geocodeQuery = fetch(`${this.baseURL}/geo/1.0/direct?q=${this.getWeatherForCity(this.cityName)}&limit=30000&appid=${this.apiKey}`);
+
+    return geocodeQuery.toString();
+
+
+
+  }
 
   // TODO: Create buildWeatherQuery method
   // private buildWeatherQuery(coordinates: Coordinates): string {}
