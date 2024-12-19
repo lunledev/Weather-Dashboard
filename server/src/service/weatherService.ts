@@ -54,19 +54,41 @@ class WeatherService {
   // TODO: Create fetchLocationData method
   private async fetchLocationData(query: string) {
 
+     const locationdata = query.split(",");
+     
+    //return locationdata.filter((data) => 
+     //{
+     // lat: parseInt(data[0]);
+      //lon: parseInt(data[1]);
 
+     //});
+     return locationdata;
+//api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
+    
 
   }
   // TODO: Create destructureLocationData method
-  // private destructureLocationData(locationData: Coordinates): Coordinates {}
+  private destructureLocationData(locationData: Coordinates): Coordinates {
+
+    
+   const lat = locationData.longitude;
+    const lon = locationData.latitude;
+
+    locationData.longitude = lat;
+    locationData.latitude = lon;
+
+
+    return locationData; 
+    
+  }
 
   // TODO: Create buildGeocodeQuery method
   private buildGeocodeQuery(): string {
 
     
     const geocodeQuery = fetch(`${this.baseURL}/geo/1.0/direct?q=${this.getWeatherForCity(this.cityName)}&limit=30000&appid=${this.apiKey}`);
-
-    return geocodeQuery.toString();
+    return ""+this.fetchLocationData(geocodeQuery.toString());
+    
 
 
 
