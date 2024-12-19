@@ -54,7 +54,7 @@ class WeatherService {
   // TODO: Create fetchLocationData method
   private async fetchLocationData(query: string) {
 
-    const locationdata = query.split(",");
+   const locationdata = query;
 
     //return locationdata.filter((data) => 
     //{
@@ -63,8 +63,25 @@ class WeatherService {
 
     //});
 
-    return locationdata;
-    //api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
+    //return locationdata;
+    //fetch(query)
+    //.then((answer) => answer.json())
+    //.then((data) => {
+
+   //   return data;
+   // });
+
+   //const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${this.API_key}`;
+   //await fetch(url)
+   //.then((answer) => answer.json())
+   //.then((data) => {
+
+    // return this.destructureLocationData(data);
+   //}
+   return locationdata;
+
+
+    
 
 
   }
@@ -80,7 +97,7 @@ class WeatherService {
     //try {
       //if (locationData.latitude !== undefined && locationData.longitude !== undefined) {
 
-        const { latitude, longitude } = locationData;
+        const { latitude, longitude} = locationData;
 
         return  { latitude, longitude };
 
@@ -108,19 +125,39 @@ class WeatherService {
   }
 
   // TODO: Create buildWeatherQuery method
-  // private buildWeatherQuery(coordinates: Coordinates): string {}
+  private buildWeatherQuery(coordinates: Coordinates): string {
+
+    const coor = this.destructureLocationData(coordinates);
+     
+   
+
+    return `https://api.openweathermap.org/data/2.5/forecast?lat=${coor.latitude}&lon=${coor.longitude}&appid=${this.apiKey}`;
+  }
 
   // TODO: Create fetchAndDestructureLocationData method
-  // private async fetchAndDestructureLocationData() {}
+ private async fetchAndDestructureLocationData() {
+
+   this.buildGeocodeQuery();
+
+ }
 
   // TODO: Create fetchWeatherData method
-  // private async fetchWeatherData(coordinates: Coordinates) {}
+  private async fetchWeatherData(coordinates: Coordinates) {
+
+    return this.buildWeatherQuery(coordinates);
+
+  }
 
   // TODO: Build parseCurrentWeather method
-  // private parseCurrentWeather(response: any) {}
+  private parseCurrentWeather(response: any) {
+    
+    response.status = response.status || 200; 
 
   // TODO: Complete buildForecastArray method
-  // private buildForecastArray(currentWeather: Weather, weatherData: any[]) {}
+   private buildForecastArray(currentWeather: Weather, weatherData: any[]) {
+
+    const { latitude,} = currentWeather;  
+   }
 
   // TODO: Complete getWeatherForCity method
   async getWeatherForCity(city: string) {
