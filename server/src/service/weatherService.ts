@@ -116,8 +116,9 @@ class WeatherService {
   private buildGeocodeQuery(): string {
 
     const limit = 30000;
-    const geocodeQuery = fetch(`${this.baseURL}/geo/1.0/direct?q=${this.getWeatherForCity(this.cityName)}&limit=${limit}&appid=${this.apiKey}`);
-    return '' + this.fetchLocationData(geocodeQuery.toString());
+    const geocodeQuery = `${this.baseURL}/geo/1.0/direct?q=${this.getWeatherForCity(this.cityName)}&limit=${limit}&appid=${this.apiKey}`;
+    return geocodeQuery;
+    
 
 
 
@@ -137,7 +138,14 @@ class WeatherService {
   // TODO: Create fetchAndDestructureLocationData method
  private async fetchAndDestructureLocationData() {
 
-   this.buildGeocodeQuery();
+
+   return await this.fetchLocationData(this.buildGeocodeQuery()).then((geocode) =>  
+    this.destructureLocationData(geocode)
+      
+  
+  
+  
+  );
 
  }
 
@@ -156,7 +164,25 @@ class WeatherService {
   // TODO: Complete buildForecastArray method
    private buildForecastArray(currentWeather: Weather, weatherData: any[]) {
 
-    const { latitude,} = currentWeather;  
+           weatherData.map((weather) => {
+
+              currentWeather ={
+
+                city: weather.city,
+                date: weather.date,
+                
+
+                
+
+
+
+
+              } as Weather;
+
+           });
+           
+
+      
    }
 
   // TODO: Complete getWeatherForCity method
