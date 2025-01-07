@@ -3,8 +3,11 @@ dotenv.config();
 
 // TODO: Define an interface for the Coordinates object
 interface Coordinates {
-  latitude: number;
-  longitude: number;
+  lat: number;  //latitude
+  lon: number; //longitude
+  name: string;
+  country: string;
+  state: string;
   //city: string; 
 }
 
@@ -97,9 +100,19 @@ class WeatherService {
     //try {
       //if (locationData.latitude !== undefined && locationData.longitude !== undefined) {
 
-        const { latitude, longitude} = locationData;
+        //const { latitude, longitude} = locationData;
 
-        return  { latitude, longitude };
+        //return  { latitude, longitude };
+
+        const {lat, lon, name, country, state} = locationData;
+
+        //object of Coordinates
+        const condinates: Coordinates = {lat, lon, name, country, state};
+
+        return condinates; // return the object of Coordinates.
+
+
+
 
      // }
     //}
