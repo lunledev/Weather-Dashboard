@@ -3,8 +3,11 @@ dotenv.config();
 
 // TODO: Define an interface for the Coordinates object
 interface Coordinates {
-  latitude: number;
-  longitude: number;
+  lat: number;  //latitude
+  lon: number; //longitude
+  name: string;
+  country: string;
+  state: string;
   //city: string; 
 }
 
@@ -97,9 +100,19 @@ class WeatherService {
     //try {
       //if (locationData.latitude !== undefined && locationData.longitude !== undefined) {
 
-        const { latitude, longitude} = locationData;
+        //const { latitude, longitude} = locationData;
 
-        return  { latitude, longitude };
+        //return  { latitude, longitude };
+
+        const {lat, lon, name, country, state} = locationData;
+
+        //object of Coordinates
+        const condinates: Coordinates = {lat, lon, name, country, state};
+
+        return condinates; // return the object of Coordinates.
+
+
+
 
      // }
     //}
@@ -116,9 +129,8 @@ class WeatherService {
   private buildGeocodeQuery(): string {
 
     const limit = 30000;
-    const geocodeQuery = `${this.baseURL}/geo/1.0/direct?q=${this.getWeatherForCity(this.cityName)}&limit=${limit}&appid=${this.apiKey}`;
-    return geocodeQuery;
-    
+    const geocodeQuery = fetch(`${this.baseURL}/geo/1.0/direct?q=${this.getWeatherForCity(this.cityName)}&limit=${limit}&appid=${this.apiKey}`);
+    return '' + this.fetchLocationData(geocodeQuery.toString());
 
 
 
@@ -138,14 +150,7 @@ class WeatherService {
   // TODO: Create fetchAndDestructureLocationData method
  private async fetchAndDestructureLocationData() {
 
-
-   return await this.fetchLocationData(this.buildGeocodeQuery()).then((geocode) =>  
-    this.destructureLocationData(geocode)
-      
-  
-  
-  
-  );
+   this.buildGeocodeQuery();
 
  }
 
@@ -164,25 +169,7 @@ class WeatherService {
   // TODO: Complete buildForecastArray method
    private buildForecastArray(currentWeather: Weather, weatherData: any[]) {
 
-           weatherData.map((weather) => {
-
-              currentWeather ={
-
-                city: weather.city,
-                date: weather.date,
-                
-
-                
-
-
-
-
-              } as Weather;
-
-           });
-           
-
-      
+    const { latitude,} = currentWeather;  
    }
 
   // TODO: Complete getWeatherForCity method
