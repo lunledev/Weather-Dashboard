@@ -1,4 +1,6 @@
+import dayjs from 'dayjs';
 import dotenv from 'dotenv';
+import { resolve } from 'node:path';
 dotenv.config();
 
 // TODO: Define an interface for the Coordinates object
@@ -57,7 +59,9 @@ class WeatherService {
   // TODO: Create fetchLocationData method
   private async fetchLocationData(query: string) {
 
-   const locationdata = query;
+    //Get info from input
+
+   //const locationdata = query;
 
     //return locationdata.filter((data) => 
     //{
@@ -81,17 +85,18 @@ class WeatherService {
 
     // return this.destructureLocationData(data);
    //}
-   return locationdata;
+   //return locationdata;
+   
 
-
-    
+    return query;
 
 
   }
   // TODO: Create destructureLocationData method
   private destructureLocationData(locationData: Coordinates): Coordinates {
 
-
+    //building
+    
     //const lat = locationData.longitude;
     // const lon = locationData.latitude;
 
@@ -107,9 +112,9 @@ class WeatherService {
         const {lat, lon, name, country, state} = locationData;
 
         //object of Coordinates
-        const condinates: Coordinates = {lat, lon, name, country, state};
+        const coordinates: Coordinates = {lat, lon, name, country, state};
 
-        return condinates; // return the object of Coordinates.
+        return coordinates; // return the object of Coordinates.
 
 
 
@@ -128,8 +133,12 @@ class WeatherService {
   // TODO: Create buildGeocodeQuery method
   private buildGeocodeQuery(): string {
 
-    const limit = 30000;
-    const geocodeQuery = fetch(`${this.baseURL}/geo/1.0/direct?q=${this.getWeatherForCity(this.cityName)}&limit=${limit}&appid=${this.apiKey}`);
+    const limit = 30000; // need this in fetch location data.
+
+    //const geocodeQuery= `${this.baseURL}/geo/1.0/direct?q=${this.getWeatherForCity(this.cityName)}&limit=${limit}&appid=${this.apiKey}`;
+    //return geocodeQuery;
+
+    const geocodeQuery = fetch(`${this.baseURL}/geo/1.0/direct?q=${this.getWeatherForCity(this.cityName)}&limit=${limit}&appid=${this.apiKey}`); // this in frech location data
     return '' + this.fetchLocationData(geocodeQuery.toString());
 
 
@@ -144,18 +153,32 @@ class WeatherService {
      
    
 
-    return `https://api.openweathermap.org/data/2.5/forecast?lat=${coor.latitude}&lon=${coor.longitude}&appid=${this.apiKey}`;
+    return `https://api.openweathermap.org/data/2.5/forecast?lat=${coor.lat}&lon=${coor.lon}&appid=${this.apiKey}`;
   }
 
   // TODO: Create fetchAndDestructureLocationData method
- private async fetchAndDestructureLocationData() {
+ //private async fetchAndDestructureLocationData() {
 
-   this.buildGeocodeQuery();
+    //call fetch method and destructurelocationData method.
 
- }
+ //  this.buildGeocodeQuery();
+  //return await this.fetchLocationData(this.buildGeocodeQuery()).then((data) =>{
+
+    // data;
+      
+//});
+ 
+
+
+   
+ 
+
+// }
 
   // TODO: Create fetchWeatherData method
   private async fetchWeatherData(coordinates: Coordinates) {
+
+    //get 5 day weatherdata array objects.
 
     return this.buildWeatherQuery(coordinates);
 
@@ -163,17 +186,35 @@ class WeatherService {
 
   // TODO: Build parseCurrentWeather method
   private parseCurrentWeather(response: any) {
-    
-    response.status = response.status || 200; 
+    const parseDate =  dayjs.unix(response.dt).format('M/D/YYYY');
+     this.cityName = response.city;
+     
+   const currentWeather =  new Weather(parseDate, this.cityName, response.main.temp, response.wind.speed, response.main.humidity,response.weather[0].icon, response.weather[0].description || response.weather[0].main );
 
+    return currentWeather;
+
+
+    //response.status = response.status || 200; 
+  }
   // TODO: Complete buildForecastArray method
    private buildForecastArray(currentWeather: Weather, weatherData: any[]) {
+    
+   // const { latitude,} = currentWeather;  
+   weatherData.map((weather)=> weather.weatherData{
 
-    const { latitude,} = currentWeather;  
-   }
+   // currentWeather = {
+     // city: weather.city,
+    //  date: weather.date,
 
+
+    });
+
+
+   
+  }
   // TODO: Complete getWeatherForCity method
   async getWeatherForCity(city: string) {
+    //parseCurrentWeather.
 
     try {
 
