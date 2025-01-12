@@ -46,7 +46,7 @@ try
       { message: 'city id is required'}
       
       );
-      await HistoryService.deleteCity(req.params.id);
+      await HistoryService.removeCity(req.params.id);
       res.json({success:'city successfully removed from search history'});
   }
 
