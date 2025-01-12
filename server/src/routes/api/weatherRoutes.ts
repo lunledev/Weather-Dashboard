@@ -11,6 +11,7 @@ router.post('/api/weather', async (req, res) => {
   // TODO: save city to search history
   if(req.body) {
     await HistoryService.addCity(city_name);
+    WeatherService.cityName;
     res.json('city added successfully');
   }
   else {
