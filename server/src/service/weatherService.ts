@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import dotenv from 'dotenv';
-import { resolve } from 'node:path';
+//import { resolve } from 'node:path';
 dotenv.config();
 
 // TODO: Define an interface for the Coordinates object
@@ -160,23 +160,24 @@ class WeatherService {
   }
 
   // TODO: Create fetchAndDestructureLocationData method
- //private async fetchAndDestructureLocationData() {
+ private async fetchAndDestructureLocationData() {
 
     //call fetch method and destructurelocationData method.
 
  //  this.buildGeocodeQuery();
-  //return await this.fetchLocationData(this.buildGeocodeQuery()).then((data) =>{
+  return await this.fetchLocationData(this.buildGeocodeQuery()).then((data) =>{
 
-    // data;
+    data;
       
-//});
+});
  
 
-// }
+}
 
   // TODO: Create fetchWeatherData method
   private async fetchWeatherData(coordinates: Coordinates) {
 
+    this.fetchAndDestructureLocationData;
     //get 5 day weatherdata array objects.
     const weatherData = await fetch(this.buildWeatherQuery(coordinates));
     //return this.buildWeatherQuery(coordinates);
@@ -186,6 +187,7 @@ class WeatherService {
 
   // TODO: Build parseCurrentWeather method
   private parseCurrentWeather(response: any) {
+    this.fetchWeatherData;
     const parseDate =  dayjs.unix(response.dt).format('M/D/YYYY');
      this.cityName = response.city;
      
@@ -203,16 +205,16 @@ class WeatherService {
    //weatherData.map((weather)=> weather.weatherData{
  
    currentWeather = this.parseCurrentWeather(weatherData);
-  
-
+   
    // const parseDate =  dayjs.unix(resolve.dt).format('M/D/YYYY');
     //const currentWeather =  new Weather(parseDate, this.cityName, weather.main.temp, weather.wind.speed, weather.main.humidity,weather.weather[0].icon, weather.weather[0].description || weather.weather[0].main );
 
-    weatherData.map((weather) => {
-      const parseDate =  dayjs.unix(weather.dt).format('M/D/YYYY');
-      const forecastWeather = new Weather(parseDate, this.cityName, weather.main.temp, weather.wind.speed, weather.main.humidity,weather.weather[0].icon, weather.weather[0].description || weather.weather[0].main );
-      return forecastWeather;
-    }, currentWeather);
+    weatherData.map((response) => {
+      
+      const parseDate =  dayjs.unix(response.dt).format('M/D/YYYY');
+      const forecastWeather = new Weather(parseDate, this.cityName, response.main.temp, response.wind.speed, response.main.humidity,response.weather[0].icon, response.weather[0].description || weather.weather[0].main );
+      return forecastWeather + ' ' + response.currentWeather;
+    });
 
     
 
@@ -227,6 +229,8 @@ class WeatherService {
   // TODO: Complete getWeatherForCity method
   async getWeatherForCity(city: string) {
     //parseCurrentWeather.
+
+    console.log("City is: " + city);
 
     try {
       const locationData = await this.fetchLocationData(city) as any;
