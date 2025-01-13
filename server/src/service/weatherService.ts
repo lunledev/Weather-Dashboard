@@ -212,8 +212,8 @@ class WeatherService {
     weatherData.map((response) => {
       
       const parseDate =  dayjs.unix(response.dt).format('M/D/YYYY');
-      const forecastWeather = new Weather(parseDate, this.cityName, response.main.temp, response.wind.speed, response.main.humidity,response.weather[0].icon, response.weather[0].description || weather.weather[0].main );
-      return forecastWeather + ' ' + response.currentWeather;
+      const forecastWeather = new Weather(parseDate, this.cityName, response.main.temp, response.wind.speed, response.main.humidity,response.weather[0].icon, response.weather[0].description || response.weather[0].main );
+      return forecastWeather + ' ' + currentWeather;
     });
 
     
