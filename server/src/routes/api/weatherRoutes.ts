@@ -9,23 +9,31 @@ router.post('/api/weather', async (req, res) => {
   // TODO: GET weather data from city name
   const {city_name} = req.body;  
   // TODO: save city to search history
-  if(req.body) {
+  if(city_name) {
     await HistoryService.addCity(city_name);
-    WeatherService.cityName;
-    res.json('city added successfully');
+    
+    const citydata = await WeatherService.getWeatherForCity(city_name);
+
+    
+    //res.json(data + 'city added successfully');
+    res.json(citydata);
   }
   else {
-    res.send('error in adding city');
+    res.status(400).send('error in adding city');
   }
 
 });
 
 // TODO: GET search history
-router.get('api/weather/history', async (_req, res) => {
+router.get('/api/weather/history', async (_req, res) => {
 try{
 
   const savedcityname = await HistoryService.getCities();
   res.json(savedcityname);
+
+  
+
+ 
   
 }
 catch(err) {
