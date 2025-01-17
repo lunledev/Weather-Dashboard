@@ -5,18 +5,30 @@ const router = Router();
  import WeatherService from '../../service/weatherService.js';
 
 // TODO: POST Request with city name to retrieve weather data
-router.post('/api/weather', async (req, res) => {
+router.post('/', async (req, res) => {
   // TODO: GET weather data from city name
-  const {city_name} = req.body;  
+   console.log(req.body);
+
+  const {cityName} = req.body;  
+
   // TODO: save city to search history
-  if(city_name) {
-    await HistoryService.addCity(city_name);
+  console.log("city name: " + cityName);
+  if(cityName) {
+    await HistoryService.addCity(cityName);
     
-    const citydata = await WeatherService.getWeatherForCity(city_name);
+   WeatherService.getWeatherForCity(cityName).then((data) =>
+    {
+      
+      return res.json(data);
+
+
+    });
+
+    //console.log("citydata: " + citydata);
 
     
     //res.json(data + 'city added successfully');
-    res.json(citydata);
+    
   }
   else {
     res.status(400).send('error in adding city');
@@ -25,10 +37,11 @@ router.post('/api/weather', async (req, res) => {
 });
 
 // TODO: GET search history
-router.get('/api/weather/history', async (_req, res) => {
+router.get('/history', async (_req, res) => {
 try{
 
   const savedcityname = await HistoryService.getCities();
+  console.log("testA: "+ JSON.stringify(savedcityname));
   res.json(savedcityname);
 
   
