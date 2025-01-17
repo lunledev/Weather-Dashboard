@@ -259,8 +259,8 @@ class WeatherService {
    
       const locationData = this.fetchLocationData(city);
       //const weather = await fetch(`${this.baseURL}/data/2.5/forecast?q=${city}&appid=${this.apiKey}`);
-
-      console.log(locationData);
+        const weather = this.fetchWeatherData(locationData as any);
+      console.log(weather);
       //console.log(weather);
       
       //this.fetchWeatherData(locationData);
